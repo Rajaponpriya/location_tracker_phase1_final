@@ -1,0 +1,32 @@
+<div class="h-screen w-screen relative">
+  <div class="absolute top-0 left-0 right-0 z-10 bg-white/90 backdrop-blur p-4 shadow">
+    <div class="flex justify-between items-center">
+      <h1 class="text-3xl font-bold">User Site Locations</h1>
+      <.button phx-click={show_modal("site-form-modal")} class="bg-blue-300 hover:bg-blue-600">
+        Add New Site
+      </.button>
+    </div>
+  </div>
+  
+  <div id="map" class="h-full z-0" phx-hook="MapHook" data-sites={Jason.encode!(@sites)}></div>
+</div>
+
+<.modal id="site-form-modal" class="z-50 fixed inset-0 bg-black/50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-md relative">
+    <button 
+      phx-click={hide_modal("site-form-modal")}
+      class="absolute top-2 right-2 p-2 text-gray-500 hover:text-gray-700"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+  <.live_component
+    module={LocationTrackerWeb.MapLive.SiteFormComponent}
+    id="site-form"
+  />
+</.modal>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
